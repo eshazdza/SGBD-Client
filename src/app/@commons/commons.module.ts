@@ -6,6 +6,8 @@ import { ArrayLengthPipe } from './pipes/arrayLength.pipe';
 import { IsArrayPipe } from './pipes/isArray.pipe';
 import { TypeOfPipe } from './pipes/typeof.pipe';
 import { StorageService } from './services/storage.service';
+import { NavbarComponent } from './ui-components/navbar/navbar.component';
+import { SidenavComponent } from './ui-components/sidenav/sidenav.component';
 
 const services = [
     EnumService,
@@ -16,6 +18,8 @@ const components = [
     ArrayLengthPipe,
     IsArrayPipe,
     TypeOfPipe,
+    NavbarComponent,
+    SidenavComponent,
 ];
 
 @NgModule({

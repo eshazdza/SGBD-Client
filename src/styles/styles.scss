@@ -1,13 +1,22 @@
 /* You can add global styles to this file, and also import other style files */
-@import "~bootstrap/scss/bootstrap";
-
+@import url("https://fonts.googleapis.com/icon?family=Material+Icons");
+@import "../../node_modules/bootstrap/scss/bootstrap";
+@import "../../node_modules/@fortawesome/fontawesome-free/css/all.css";
+@import "colors";
 
 body {
   margin: 0;
+  background-color: $white;
+
 }
 
 a {
   text-decoration: none;
+  color: $darkblue;
+
+  &:hover {
+    color: $blue;
+  }
 }
 
 .h-divider-light {
