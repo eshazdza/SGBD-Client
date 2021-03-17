@@ -3,13 +3,14 @@ import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { CommonsModule } from './@commons/commons.module';
-import { CoursComponent } from './cours/cours.component';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
     declarations: [
         AppComponent,
     ],
     imports: [
+        HttpClientModule,
         BrowserModule,
         CommonsModule.forRoot(),
         AppRoutingModule
