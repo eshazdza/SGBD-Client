@@ -11,6 +11,14 @@ const routes: Routes = [
         loadChildren: () => import('./cours/cours.module').then(mod => mod.CoursModule),
     },
     {
+        path: 'profil',
+        loadChildren: () => import('./profile/profile.module').then(mod => mod.ProfileModule),
+    },
+    {
+        path: 'resultats',
+        loadChildren: () => import('./test-results/test-results.module').then(mod => mod.TestResultsModule),
+    },
+    {
         path: '', redirectTo: '/home', pathMatch: 'full'
     },
     {
