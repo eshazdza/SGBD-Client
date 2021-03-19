@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { from } from 'rxjs';
 import { TestResultsService } from '../@commons/services/test-results.service';
+import { TestResultEntity } from '../@commons/entities/test-result.entity';
 
 @Component({
     selector: 'app-sgbd-test-results',
@@ -9,6 +10,8 @@ import { TestResultsService } from '../@commons/services/test-results.service';
 })
 export class TestResultsComponent implements OnInit {
 
+    results: TestResultEntity[] = [];
+
     constructor(
         private testResultService: TestResultsService,
     ) {
@@ -16,7 +19,8 @@ export class TestResultsComponent implements OnInit {
 
     ngOnInit(): void {
         from(this.testResultService.get()).subscribe((testResults) => {
-            console.log(testResults);
+            this.results = testResults._embedded.userTestList;
+            console.log(this.results);
         });
     }
 
