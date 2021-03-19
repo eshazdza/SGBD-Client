@@ -14,7 +14,7 @@
                     <div class="card-body">
                         <h4 class="mb-4">Register</h4>
                         <app-sgbd-form [formDefinition]="userForm?.definition"
-                                       (valueChange)="onValueChange($event, 'identity')"
+                                       [groupValidators]="userForm.groupValidators"
                                        (formSubmit)="register($event)"></app-sgbd-form>
                     </div>
                 </div>

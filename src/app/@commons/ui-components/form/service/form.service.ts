@@ -3,11 +3,13 @@ import { BaseInput } from '../../../abstract/base-input';
 import { FormControl, FormGroup } from '@angular/forms';
 import { ValidatorsEnum } from '../enums/validators.enum';
 import { DateValidator } from '../validators/date.validator';
+import { IsEqualValidator } from '../validators/is-equal.validator';
 
 @Injectable()
 export class FormService {
     constructor(
         private dateValidator: DateValidator,
+        private isEqualValidator: IsEqualValidator,
     ) {
     }
 
@@ -61,6 +63,13 @@ export class FormService {
                     case ValidatorsEnum.DATEAFTER :
                         groupValidatorsFn.push(
                             this.dateValidator.isAfter(
+                                groupValidator.targetControlName, groupValidator.inputControlName, groupValidator?.errorMessage
+                            )
+                        );
+                        break;
+                    case ValidatorsEnum.ISEQUAL:
+                        groupValidatorsFn.push(
+                            this.isEqualValidator.isEqual(
                                 groupValidator.targetControlName, groupValidator.inputControlName, groupValidator?.errorMessage
                             )
                         );

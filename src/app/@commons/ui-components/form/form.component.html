@@ -7,6 +7,9 @@
             <div *ngIf="form.errors && form.errors.isAfterError && (form.touched || form.dirty)" class="alert alert-danger">
                 {{form.errors.isAfterMessage}}
             </div>
+            <div *ngIf="form.errors && form.errors.isEqualError && (form.touched || form.dirty)" class="alert alert-danger">
+                {{form.errors.isEqualMessage}}
+            </div>
             <!-- ****************** END GROUP ERRORS ****************** -->
 
 

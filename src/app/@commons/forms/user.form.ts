@@ -1,6 +1,7 @@
 import { BaseInput } from '../abstract/base-input';
 import { Validators } from '@angular/forms';
-import { SubmitEnum } from "../ui-components/form/enums/submit.enum";
+import { SubmitEnum } from '../ui-components/form/enums/submit.enum';
+import { ValidatorsEnum } from '../ui-components/form/enums/validators.enum';
 
 export class UserForm {
     definition = [
@@ -13,7 +14,7 @@ export class UserForm {
             validators: [Validators.required, Validators.minLength(5)],
             inputStyle: 'col-sm-7',
             labelStyle: 'col-sm-5',
-            groupStyle : 'form-group row',
+            groupStyle: 'form-group row',
         } as BaseInput<any>,
         {
             key: 'lastname',
@@ -24,7 +25,7 @@ export class UserForm {
             validators: [Validators.required, Validators.minLength(5)],
             inputStyle: 'col-sm-7',
             labelStyle: 'col-sm-5',
-            groupStyle : 'form-group row',
+            groupStyle: 'form-group row',
         } as BaseInput<any>,
         {
             key: 'password',
@@ -35,7 +36,7 @@ export class UserForm {
             validators: [Validators.required, Validators.minLength(5)],
             inputStyle: 'col-sm-7',
             labelStyle: 'col-sm-5',
-            groupStyle : 'form-group row',
+            groupStyle: 'form-group row',
         } as BaseInput<any>,
         {
             key: 'confirmPassword',
@@ -46,12 +47,21 @@ export class UserForm {
             validators: [Validators.required, Validators.minLength(5)],
             inputStyle: 'col-sm-7',
             labelStyle: 'col-sm-5',
-            groupStyle : 'form-group row',
+            groupStyle: 'form-group row',
         } as BaseInput<any>,
         {
             key: SubmitEnum.SUBMIT,
             label: 'Register',
             type: 'button',
         } as BaseInput<any>,
+    ];
+
+    groupValidators = [
+        {
+            validator: ValidatorsEnum.ISEQUAL,
+            targetControlName: 'password',
+            inputControlName: 'confirmPassword',
+            errorMessage: 'Les mots de passe ne sont pas identiques',
+        },
     ];
 }

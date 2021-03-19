@@ -17,11 +17,7 @@ export class SignupComponent implements OnInit {
 
     }
 
-    onValueChange($event: any, identity: string) {
-        
-    }
-
-    register($event: any) {
-        
+    register($event: any): void {
+        console.log($event);
     }
 }
