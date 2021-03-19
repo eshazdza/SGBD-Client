@@ -1,0 +1,28 @@
+.form-review {
+  border-radius: 5px;
+  background-color: #f8f9fa;
+}
+
+.header {
+  background-color: #2f3a73;
+  padding: 20px 20px;
+  margin: 0;
+  border-radius: 5px 5px 0 0;
+  color: white;
+}
+
+.property-group-header {
+  background-color: #505c9b;
+  color: white;
+  padding: 5px 20px;
+  margin: 0;
+  border-bottom: 1px #2f3a73 solid;
+}
+
+.property-field {
+  padding: 0 20px;
+}
+
+.collapsed {
+  display: none
+}

@@ -1,0 +1,156 @@
+<div *ngIf="form && inputDefinition" class="col">
+    <div [formGroup]="form" [ngClass]="inputDefinition.groupStyle">
+        <!-- ****************** LABEL ****************** -->
+        <label
+                *ngIf="inputDefinition.type!=='button'"
+                [attr.for]="inputDefinition.key"
+                [ngClass]="inputDefinition.labelStyle +' col-form-label'"
+        >
+            {{inputDefinition.label}}
+        </label>
+        <!-- ****************** END LABEL ****************** -->
+
+        <!-- ---------- ERRORS ---------- -->
+        <div *ngIf="get(inputDefinition.key).invalid
+                                && (get(inputDefinition.key).dirty
+                                || get(inputDefinition.key).touched)">
+
+            <div *ngIf="get(inputDefinition.key).errors?.required"
+                 class="errors">
+                {{inputDefinition.label}} est obligatoire.
+            </div>
+
+            <div *ngIf="get(inputDefinition.key).errors?.minlength"
+                 class="errors">
+                {{inputDefinition.label}} doit avoir un minimum
+                de {{get(inputDefinition.key).errors?.minlength.requiredLength}} caractères.
+            </div>
+        </div>
+        <!-- ---------- END ERRORS ---------- -->
+
+        <div [ngSwitch]="inputDefinition.type" [ngClass]="inputDefinition.inputStyle">
+            <!-- ---------- SELECT ---------- -->
+            <div *ngSwitchCase="'select'">
+                <select
+                        (ngModelChange)="onChange($event, inputDefinition.key)"
+                        [formControlName]="inputDefinition.key"
+                        [id]="inputDefinition.key"
+                        [ngClass]="inputDefinition.inputStyle +' form-control'"
+                >
+                    <option
+                            *ngFor="let option of inputDefinition.options"
+                            [value]="option.key"
+                    >
+                        {{option.value}}
+                    </option>
+                </select>
+            </div>
+            <!-- ---------- END SELECT ---------- -->
+            <!-- ---------- TEXT AREA ---------- -->
+            <div *ngSwitchCase="'textarea'">
+                <textarea
+                          (ngModelChange)="onChange($event, inputDefinition.key)"
+                          [formControlName]="inputDefinition.key"
+                          [id]="inputDefinition.key"
+                          [readOnly]="inputDefinition?.readonly"
+                          [ngClass]="'form-control'"
+                >
+                </textarea>
+            </div>
+            <!-- ---------- END TEXT AREA ---------- -->
+            <!-- ---------- BUTTON ---------- -->
+            <div *ngSwitchCase="'button'">
+                <button type="submit"
+                        class="btn btn-primary mt-2 mb-3"
+                        [disabled]="!form.valid"
+                        (click)="onSubmit(inputDefinition.key)"
+                >
+                    {{inputDefinition.label}}
+                </button>
+            </div>
+            <!-- ---------- END BUTTON ---------- -->
+            <!-- ---------- STANDARD INPUT ---------- -->
+            <div *ngSwitchDefault>
+                <input
+                        (ngModelChange)="onChange($event, inputDefinition.key)"
+                        [formControlName]="inputDefinition.key"
+                        [id]="inputDefinition.key"
+                        [type]="inputDefinition.type"
+                        [readOnly]="inputDefinition?.readonly"
+                        [ngClass]="'form-control'"
+                        [email]="inputDefinition.type ==='email'"
+                >
+            </div>
+            <!-- ---------- END STANDARD INPUT ---------- -->
+
+        </div>
+
+
+<!--        &lt;!&ndash; ****************** SELECT ****************** &ndash;&gt;-->
+<!--        <div [ngClass]="inputDefinition.inputStyle">-->
+<!--            <select-->
+<!--                    *ngIf="inputDefinition.type==='select'; else notSelectInput"-->
+<!--                    (ngModelChange)="onChange($event, inputDefinition.key)"-->
+<!--                    [formControlName]="inputDefinition.key"-->
+<!--                    [id]="inputDefinition.key"-->
+<!--                    [ngClass]="inputDefinition.inputStyle +' form-control'"-->
+<!--            >-->
+<!--                <option-->
+<!--                        *ngFor="let option of inputDefinition.options"-->
+<!--                        [value]="option.key"-->
+<!--                >-->
+<!--                    {{option.value}}-->
+<!--                </option>-->
+<!--            </select>-->
+<!--            &lt;!&ndash; ****************** END SELECT ****************** &ndash;&gt;-->
+
+<!--            &lt;!&ndash; ****************** ERROR MESSAGES ****************** &ndash;&gt;-->
+<!--            <div *ngIf="get(inputDefinition.key).invalid-->
+<!--                        && (get(inputDefinition.key).dirty-->
+<!--                        || get(inputDefinition.key).touched)">-->
+
+<!--                <div *ngIf="get(inputDefinition.key).errors?.required"-->
+<!--                     class="errors">-->
+<!--                    {{inputDefinition.label}} est obligatoire.-->
+<!--                </div>-->
+
+<!--                <div *ngIf="get(inputDefinition.key).errors?.minlength"-->
+<!--                     class="errors">-->
+<!--                    {{inputDefinition.label}} doit avoir un minimum-->
+<!--                    de {{get(inputDefinition.key).errors?.minlength.requiredLength}} caractères.-->
+<!--                </div>-->
+<!--            </div>-->
+<!--            &lt;!&ndash; ****************** END ERROR MESSAGES ****************** &ndash;&gt;-->
+<!--        </div>-->
+
+<!--        <ng-template #notSelectInput>-->
+<!--            &lt;!&ndash; ****************** SUBMIT INPUT ****************** &ndash;&gt;-->
+<!--            <div *ngIf="inputDefinition.type==='button'; else standardInput">-->
+<!--                <button type="submit"-->
+<!--                        class="btn btn-primary mt-2 mb-3"-->
+<!--                        [disabled]="!form.valid"-->
+<!--                        (click)="onSubmit(inputDefinition.key)"-->
+<!--                >-->
+<!--                    {{inputDefinition.label}}-->
+<!--                </button>-->
+<!--            </div>-->
+<!--            &lt;!&ndash; ****************** END SUBMIT INPUT ****************** &ndash;&gt;-->
+
+
+<!--            &lt;!&ndash; ****************** STANDARD INPUT ****************** &ndash;&gt;-->
+<!--            <ng-template #standardInput>-->
+<!--                <input-->
+<!--                        (ngModelChange)="onChange($event, inputDefinition.key)"-->
+<!--                        [formControlName]="inputDefinition.key"-->
+<!--                        [id]="inputDefinition.key"-->
+<!--                        [type]="inputDefinition.type"-->
+<!--                        [readOnly]="inputDefinition?.readonly"-->
+<!--                        [ngClass]="'form-control'"-->
+<!--                        [email]="inputDefinition.type ==='email'"-->
+<!--                >-->
+<!--            </ng-template>-->
+<!--            &lt;!&ndash; ****************** END STANDARD INPUT ****************** &ndash;&gt;-->
+<!--        </ng-template>-->
+
+    </div>
+</div>

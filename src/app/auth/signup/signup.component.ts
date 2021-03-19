@@ -1,16 +1,27 @@
 import { Component, OnInit } from '@angular/core';
+import { UserForm } from '../../@commons/forms/user.form';
 
 @Component({
-  selector: 'app-sgbd-signup',
-  templateUrl: './signup.component.html',
-  styleUrls: ['./signup.component.scss']
+    selector: 'app-sgbd-signup',
+    templateUrl: './signup.component.html',
+    styleUrls: ['./signup.component.scss']
 })
 export class SignupComponent implements OnInit {
 
-  constructor() { }
+    userForm: UserForm = new UserForm();
 
-  ngOnInit(): void {
-    console.log('vi ia m no loadted');
-  }
+    constructor() {
+    }
 
+    ngOnInit(): void {
+
+    }
+
+    onValueChange($event: any, identity: string) {
+        
+    }
+
+    register($event: any) {
+        
+    }
 }

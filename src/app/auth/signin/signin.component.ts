@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { AuthService } from "../../@commons/services/auth.service";
+import { UserEntity } from "../../@commons/entities/user.entity";
+import { from } from "rxjs";
 
 @Component({
     selector: 'app-sgbd-signin',
@@ -14,6 +17,7 @@ export class SigninComponent implements OnInit {
 
     constructor(
         private formBuilder: FormBuilder,
+        private authService: AuthService,
         private router: Router,
     ) {
         this.form = this.formBuilder.group({
@@ -30,6 +34,14 @@ export class SigninComponent implements OnInit {
     }
 
     signin(): void {
-        console.log("signin");
+        const val = this.form.value;
+        if (val.email && val.password) {
+            // @ts-ignore
+            from(this.authService.signin(val.email, val.password)).subscribe((user: UserEntity) => {
+                if (user) {
+                    this.router.navigate(['/home']);
+                }
+            });
+        }
     }
 }

@@ -1,1 +1,27 @@
-<p>signup works!</p>
+<div class="container-fluid">
+    <div class="row justify-content-center mt-5">
+        <div class="card mt-5 bgc">
+            <div class="row">
+                <div class="col logo">
+                    <div class="aside-img">
+                        <img src="/assets/images/LOGO.png" alt="">
+                    </div>
+                    <div class="title">
+                        <h3>IEPSCF</h3>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card-body">
+                        <h4 class="mb-4">Register</h4>
+                        <app-sgbd-form [formDefinition]="userForm?.definition"
+                                       (valueChange)="onValueChange($event, 'identity')"
+                                       (formSubmit)="register($event)"></app-sgbd-form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+

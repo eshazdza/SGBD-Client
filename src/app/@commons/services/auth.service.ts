@@ -13,4 +13,10 @@ export class AuthService {
     getCurrentAuthenticatedUser(): UserEntity | boolean {
         return StorageService.currentAuthenticatedUser();
     }
+
+    signin(email: string, password: string): Promise<UserEntity> | null {
+        console.log(email);
+        console.log(password);
+        return null;
+    }
 }

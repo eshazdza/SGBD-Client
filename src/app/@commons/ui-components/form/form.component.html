@@ -1,0 +1,40 @@
+<div class="form-container">
+    <div *ngIf="form">
+
+        <form [formGroup]="form" class="">
+
+            <!-- ****************** GROUP ERRORS ****************** -->
+            <div *ngIf="form.errors && form.errors.isAfterError && (form.touched || form.dirty)" class="alert alert-danger">
+                {{form.errors.isAfterMessage}}
+            </div>
+            <!-- ****************** END GROUP ERRORS ****************** -->
+
+
+            <div *ngFor="let inputDefinition of formDefinition | excludeSubmitPipe"
+                 class="row"
+            >
+                <app-sgbd-form-input
+                        [inputDefinition]="inputDefinition"
+                        [form]="form"
+                        (inputValueChange)="onValueChange($event)"
+                        (submitEmitter)="onSubmit($event)"
+                        class=""
+                >
+                </app-sgbd-form-input>
+            </div>
+
+            <div class="form-row submit-row d-flex justify-content-between flex-row-reverse">
+                <div *ngFor="let inputDefinition of formDefinition | onlySubmitPipe">
+                    <app-sgbd-form-input
+                            [inputDefinition]="inputDefinition"
+                            [form]="form"
+                            (inputValueChange)="onValueChange($event)"
+                            (submitEmitter)="onSubmit($event)"
+                    >
+                    </app-sgbd-form-input>
+                </div>
+            </div>
+        </form>
+
+    </div>
+</div>

@@ -1,0 +1,60 @@
+<div class="card form-review">
+    <div class="card-title m-0">
+        <p class="header">Résumé : </p>
+    </div>
+    <div *ngFor="let properties of targetObjet | keyvalue">
+        <!--TODO refresh status of properties.value ie. fix COunt-->
+        <p class="property-group-header">
+            {{properties.key}}
+            <span *ngIf="(properties.value | isArray)">
+                ({{properties.value | arrayLength}})
+            </span>
+            <i *ngIf="!isShown(properties.key)" class="fas fa-chevron-down"
+               (click)="onCollapseClicked(properties.key)"></i>
+            <i *ngIf="isShown(properties.key)" class="fas fa-chevron-up"
+               (click)="onCollapseClicked(properties.key)"></i>
+        </p>
+
+        <!-- ---------- IF OBJECT ---------- -->
+        <div *ngIf="(properties.value | typeof) === 'object'">
+            <!-- ---------- IF ARRAY ---------- -->
+            <div *ngIf="(properties.value | isArray); else notArray ">
+                <ng-container [ngTemplateOutlet]="arrayTemplate"
+                              [ngTemplateOutletContext]="{items : properties.value, parent:properties.key}"></ng-container>
+            </div>
+            <!-- ---------- END IF ARRAY ---------- -->
+            <ng-template #notArray>
+                <ng-container [ngTemplateOutlet]="objectTemplate"
+                              [ngTemplateOutletContext]="{item : properties.value, parent:properties.key}"></ng-container>
+            </ng-template>
+        </div>
+        <!-- ---------- END IF OBJECT ---------- -->
+
+    </div>
+</div>
+
+
+<!-- ---------- ARRAY TEMPLATE ---------- -->
+<ng-template #arrayTemplate let-items="items" let-parent="parent">
+    <div *ngFor="let item of items; let i = index" class="d-flex flex-column">
+        <div *ngIf="i !== 0 && isShown(parent)" class="h-divider-light align-self-center"></div>
+        <div *ngIf="(item | typeof)==='object'">
+            <ng-container [ngTemplateOutlet]="objectTemplate"
+                          [ngTemplateOutletContext]="{item : item, parent: parent}"></ng-container>
+        </div>
+    </div>
+</ng-template>
+<!-- ---------- END ARRAY TEMPLATE ---------- -->
+
+<!-- ---------- OBJECT TEMPLATE ---------- -->
+<ng-template #objectTemplate let-item="item" let-parent="parent">
+    <div *ngIf="isShown(parent)" id="{{parent}}-children" class="mt-2">
+        <ng-container *ngFor="let property of item | keyvalue">
+            <p class="property-field"
+               *ngIf="(skipUnset && property.value)">
+                {{property.key}} : {{property.value}}
+            </p>
+        </ng-container>
+    </div>
+</ng-template>
+<!-- ---------- END OBJECT TEMPLATE ---------- -->
