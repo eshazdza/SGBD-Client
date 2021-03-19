@@ -8,10 +8,12 @@ import { TypeOfPipe } from './pipes/typeof.pipe';
 import { StorageService } from './services/storage.service';
 import { NavbarComponent } from './ui-components/navbar/navbar.component';
 import { SidenavComponent } from './ui-components/sidenav/sidenav.component';
+import { AuthService } from './services/auth.service';
 
 const services = [
     EnumService,
     StorageService,
+    AuthService,
 ];
 
 const components = [

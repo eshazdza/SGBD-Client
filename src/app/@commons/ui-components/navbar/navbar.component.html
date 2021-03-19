@@ -19,5 +19,10 @@
             <a class="nav-link" routerLink="" (click)="onLogoutClicked()">Logout</a>
         </div>
     </div>
+    <div class="" *ngIf="!isLoggedIn">
+        <div class="collapse navbar-collapse justify-content-end">
+            <a class="nav-link" routerLink="" (click)="onLoginClicked()">Login</a>
+        </div>
+    </div>
 
 </nav>
