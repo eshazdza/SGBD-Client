@@ -25,6 +25,10 @@ export class BaseService {
         );
     }
 
+    get(): Observable<any> {
+        return this.http.get(this.path);
+    }
+
     /**
      * @param filters
      * @param page

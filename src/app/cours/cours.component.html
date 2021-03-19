@@ -7,10 +7,35 @@
         <!-- ---------- SIDENAV ---------- -->
         <app-sgbd-sidenav class="col-2 p-0"></app-sgbd-sidenav>
         <!-- ---------- END SIDENAV ---------- -->
+        <!-- ---------- CONTENT ---------- -->
         <div class="col-10 content p-5">
             <div class="row m-0 justify-content-around">
+                <div class="col-12" *ngFor="let cour of cours">
+                    <ng-container [ngTemplateOutlet]="courTemplate"
+                                  [ngTemplateOutletContext]="{cour:cour}"></ng-container>
 
+                </div>
+            </div>
+        </div>
+        <!-- ---------- END CONTENT ---------- -->
+    </div>
+</div>
+
+<!-- ---------- COURS TEMPLATE ---------- -->
+<ng-template #courTemplate let-cour="cour">
+    <div class="card m-2 list-item">
+        <div class="card-body">
+            <div class="d-flex justify-content-between">
+                <h5 class="card-title"><a routerLink="/cours/{{cour.uuid}}">{{cour.name}}</a></h5>
+                <div class="d-flex flex-column align-items-end">
+                    <h6 class="card-subtitle mb-2 text-muted">{{cour.id}}</h6>
+                    <h6 class="card-subtitle mb-2"><a routerLink="/cours/teacher/{{cour.teacher.id}}">{{cour.teacher.firstname}} {{cour.teacher.lastname}}</a></h6>
+                </div>
+            </div>
+            <div>
+                <h6><a routerLink="/resultats/{{cour.uuid}}" (click)="onResultsClicked(cour.uuid)">Mes resultats</a></h6>
             </div>
         </div>
     </div>
-</div>
+</ng-template>
+<!-- ---------- END COURS TEMPLATE ---------- -->
