@@ -1,0 +1,56 @@
+
+<div class="container-fluid">
+    <div class="row justify-content-center mt-5">
+        <div class="card mt-5 bgc">
+            <div class="row">
+                <div class="col logo">
+                    <div class="aside-img">
+                        <img src="/assets/images/LOGO.png" alt="">
+                    </div>
+                    <div class="title">
+                       <h3>IEPSCF</h3>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card-body">
+                        <ng-container *ngIf="user; else notloggedin">
+                            Already loggedin
+                            <a class="btn btn-primary" routerLink="/home">Home</a>
+                            <a class="btn btn-primary" (click)="onLogoutClicked()">Logout</a>
+                        </ng-container>
+                        <ng-template #notloggedin>
+                            <form [formGroup]="form">
+                                <fieldset>
+                                    <legend>Login</legend>
+                                    <div class="alert alert-danger"
+                                         *ngIf="formErrors">{{formErrors.message}}</div>
+                                    <div class="form-group">
+                                        <label for="email">Email:</label>
+                                        <input name="email" formControlName="email"
+                                               class="form-control login-input"
+                                               id="email"
+                                               type="email"
+                                               autofocus>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="password">Password:</label>
+                                        <input name="password" formControlName="password"
+                                               type="password" class="form-control login-input"
+                                               id="password">
+                                    </div>
+                                </fieldset>
+                                <div class="form-group">
+                                    <button class="btn btn-primary"
+                                            (click)="signin()">Login
+                                    </button>
+                                </div>
+                            </form>
+                            <!-- ---------- END DEFAULT SIGN IN FORM ---------- -->
+                        </ng-template>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

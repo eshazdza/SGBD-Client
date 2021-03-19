@@ -1,13 +1,16 @@
 import { Injectable } from '@angular/core';
+import { UserEntity } from '../entities/user.entity';
+import { StorageService } from './storage.service';
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root'
 })
 export class AuthService {
 
-  constructor() { }
+    constructor() {
+    }
 
-    getCurrentAuthenticatedUser():Promise<User> {
-
+    getCurrentAuthenticatedUser(): UserEntity | boolean {
+        return StorageService.currentAuthenticatedUser();
     }
 }
