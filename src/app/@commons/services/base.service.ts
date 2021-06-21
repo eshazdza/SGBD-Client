@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
 import { Observable } from 'rxjs';
+import { QueryParamService } from './query-param.service';
 
 export class BaseService {
 
@@ -9,6 +10,7 @@ export class BaseService {
     constructor(
         path: string,
         protected http: HttpClient,
+        protected queryParamService: QueryParamService,
     ) {
         this.path = environment.API_BASE + '/' + path;
     }
