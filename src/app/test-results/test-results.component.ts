@@ -24,4 +24,7 @@ export class TestResultsComponent implements OnInit {
         });
     }
 
+    onDownloadCliked() {
+        from(this.testResultService.downloadBulletin().subscribe(()))
+    }
 }
