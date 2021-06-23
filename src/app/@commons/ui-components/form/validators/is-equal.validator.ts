@@ -6,7 +6,7 @@ export class IsEqualValidator {
 
     /**
      * Checks two fields are equals to each other
-     * @param targetControlName the name of the control containing the reference cutoff date
+     * @param targetControlName the name of the control containing the reference
      * @param inputControlName the name of the control to check
      * @param errorMessage custom error message to display
      */

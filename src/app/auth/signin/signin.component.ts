@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AuthService } from "../../@commons/services/auth.service";
-import { UserEntity } from "../../@commons/entities/user.entity";
-import { from } from "rxjs";
+import { AuthService } from '../../@commons/services/auth.service';
+import { from } from 'rxjs';
+import { StorageService } from '../../@commons/services/storage.service';
 
 @Component({
     selector: 'app-sgbd-signin',
@@ -30,15 +30,15 @@ export class SigninComponent implements OnInit {
     }
 
     onLogoutClicked(): void {
-        console.log("signout");
+        this.authService.signout();
     }
 
     signin(): void {
         const val = this.form.value;
         if (val.email && val.password) {
-            // @ts-ignore
-            from(this.authService.signin(val.email, val.password)).subscribe((user: UserEntity) => {
+            from(this.authService.signin(val.email, val.password)).subscribe((user) => {
                 if (user) {
+                    StorageService.logUser(user);
                     this.router.navigate(['/home']);
                 }
             });

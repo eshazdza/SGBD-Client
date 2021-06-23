@@ -27,25 +27,33 @@ export class BaseService {
         );
     }
 
-    get(): Observable<any> {
+    getAll(): Observable<any> {
         return this.http.get(this.path);
     }
 
+    getById(id: string): Observable<any> {
+        return this.http.get(this.path + '/' + id);
+    }
+
     /**
-     * @param filters
+     * @param filter
      * @param page
      * @param pageSize
      * @protected
      */
-    list(filters?: any, page = 0, pageSize = 10): Observable<any> {
+    list(filter?: any, page = 0, pageSize = 10): Observable<any> {
         return this.http.post<any>(
-            this.path,
+            this.path + '/list',
             {
-                filters,
+                filter,
                 page,
                 pageSize,
             }
         );
+    }
+
+    post(entity: any): Observable<any> {
+        return this.http.post(this.path, entity);
     }
 
     /**

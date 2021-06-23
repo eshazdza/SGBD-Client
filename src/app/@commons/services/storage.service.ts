@@ -11,7 +11,6 @@ export class StorageService {
 
     static currentAuthenticatedUser(): UserEntity | boolean {
         if (localStorage.getItem('currentAuthUser')) {
-            console.log(localStorage.getItem('currentAuthUser'));
             const user: UserEntity = new UserEntity();
             user.id = localStorage.getItem('currentAuthUserId');
             user.firstname = localStorage.getItem('currentAuthUserFirstName');
@@ -20,6 +19,21 @@ export class StorageService {
         } else {
             return false;
         }
+    }
+
+    static logUser(user: UserEntity): UserEntity {
+        localStorage.setItem('currentAuthUser', 'true');
+        localStorage.setItem('currentAuthUserId', user.id || '');
+        localStorage.setItem('currentAuthUserFirstName', user.firstname || '');
+        localStorage.setItem('currentAuthUserLastName', user.lastname || '');
+        return user;
+    }
+
+    static logoutUser(): void {
+        localStorage.removeItem('currentAuthUser');
+        localStorage.removeItem('currentAuthUserId');
+        localStorage.removeItem('currentAuthUserFirstName');
+        localStorage.removeItem('currentAuthUserLastName');
     }
 
 

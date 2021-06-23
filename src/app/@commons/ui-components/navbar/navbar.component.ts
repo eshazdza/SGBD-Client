@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-// import { CognitoService } from '../../services/cognito.service';
-import { from } from 'rxjs';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
     selector: 'app-sgbd-navbar',
@@ -14,22 +13,18 @@ export class NavbarComponent implements OnInit {
 
     constructor(
         private readonly router: Router,
+        private authService: AuthService,
     ) {
     }
 
     ngOnInit(): void {
-        // from(this.cognitoService.getCurrentAuthenticatedUser()).subscribe((isAuth) => {
-        //     this.isLoggedIn = isAuth;
-        // });
+        if (this.authService.getCurrentAuthenticatedUser()) {
+            this.isLoggedIn = true;
+        }
     }
 
     onLogoutClicked(): void {
-        // this.cognitoService.signout().then(() => {
-        //     this.router.navigate(['/auth/signin']);
-        // });
-    }
-
-    onLoginClicked() {
-
+        this.authService.signout();
+        this.router.navigate(['auth/signin']);
     }
 }

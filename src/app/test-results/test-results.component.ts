@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { from } from 'rxjs';
 import { TestResultsService } from '../@commons/services/test-results.service';
 import { TestResultEntity } from '../@commons/entities/test-result.entity';
+import { UserEntity } from '../@commons/entities/user.entity';
+import { AuthService } from '../@commons/services/auth.service';
 
 @Component({
     selector: 'app-sgbd-test-results',
@@ -11,20 +13,28 @@ import { TestResultEntity } from '../@commons/entities/test-result.entity';
 export class TestResultsComponent implements OnInit {
 
     results: TestResultEntity[] = [];
+    user: UserEntity | undefined;
 
     constructor(
         private testResultService: TestResultsService,
+        private authService: AuthService,
     ) {
     }
 
     ngOnInit(): void {
-        from(this.testResultService.get()).subscribe((testResults) => {
-            this.results = testResults._embedded.userTestList;
-            console.log(this.results);
-        });
+        this.user = this.authService.getCurrentAuthenticatedUser();
+        if (this.user && this.user.id) {
+            from(this.testResultService.list({id: this.user.id})).subscribe((testResults) => {
+                console.log(testResults);
+                this.results = testResults._embedded.userTestList;
+            });
+        }
     }
 
-    onDownloadCliked() {
-        from(this.testResultService.downloadBulletin().subscribe(()))
+    onDownloadCliked(): void {
+        if (this.user && this.user.id) {
+            this.testResultService.downloadBulletin(this.user.id);
+        }
+
     }
 }

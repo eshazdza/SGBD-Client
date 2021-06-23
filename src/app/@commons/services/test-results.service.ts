@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BaseService } from './base.service';
-import { Observable } from 'rxjs';
-import { ObjectService } from './object.service';
-import { QueryParamService } from "./query-param.service";
+import { QueryParamService } from './query-param.service';
+import { environment } from '../../../environments/environment';
+import { from, Observable } from 'rxjs';
 
 @Injectable({
     providedIn: 'root'
@@ -17,20 +17,20 @@ export class TestResultsService extends BaseService {
         super('usertests', http, queryParamService);
     }
 
-    downloadBulletin(): void {
 
+    downloadBulletin(id: string): void {
+        const filename = 'bulletin.pdf';
+        from(this.http.get(environment.API_BASE + '/documents/user/' + id, {responseType: 'blob'})).subscribe((result) => {
+            // Handle IE10+
+            if (navigator.msSaveBlob) {
+                return navigator.msSaveBlob(result, filename);
+            } else {
+                const downloadLink = document.createElement('a');
+                downloadLink.href = window.URL.createObjectURL(result);
+                downloadLink.download = filename;
+                downloadLink.click();
+                return;
+            }
+        });
     }
-
-    findFileByKey(fileKey: string): Observable<any> {
-        return this.http.get(
-            this.queryParamService.addExtraQueryParams(
-                new Map([
-                    ['fileKey', fileKey]
-                ]),
-                `${this.path}`
-            ),
-            {responseType: ObjectService.getContentTypeFromExtension(ObjectService.getExtension(fileKey))}
-        );
-    }
-
 }

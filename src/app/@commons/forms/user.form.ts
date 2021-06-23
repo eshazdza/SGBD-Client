@@ -28,6 +28,17 @@ export class UserForm {
             groupStyle: 'form-group row',
         } as BaseInput<any>,
         {
+            key: 'email',
+            label: 'email',
+            value: '',
+            order: 2,
+            type: 'text',
+            validators: [Validators.required, Validators.minLength(5), Validators.email],
+            inputStyle: 'col-sm-7',
+            labelStyle: 'col-sm-5',
+            groupStyle: 'form-group row',
+        } as BaseInput<any>,
+        {
             key: 'password',
             label: 'password',
             value: '',

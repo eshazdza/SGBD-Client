@@ -3,8 +3,9 @@
 .sidebar {
   min-width: 150px;
   height: calc(100vh - 60px);
-  background-color: #2f3a73;
+  background-color: #222939;
   .side-nav {
+
     display: flex;
     flex-direction: column;
     list-style: none;
@@ -12,13 +13,13 @@
 
     li {
       a {
-        color: $white;
+        color : #bf9b30;
         display: block;
         padding: 20px 40px;
         //border-bottom: 1px $aafu-pink solid;
 
         &:hover {
-          background-color: lighten(#2f3a73, 10%);
+          background-color: lighten(#222939, 10%);
         }
       }
 

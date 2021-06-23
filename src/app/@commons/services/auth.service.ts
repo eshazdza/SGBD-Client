@@ -1,22 +1,36 @@
 import { Injectable } from '@angular/core';
 import { UserEntity } from '../entities/user.entity';
 import { StorageService } from './storage.service';
+import { HttpClient } from '@angular/common/http';
+import { BaseService } from './base.service';
+import { from, Observable } from 'rxjs';
+import { QueryParamService } from './query-param.service';
 
 @Injectable({
     providedIn: 'root'
 })
-export class AuthService {
+export class AuthService extends BaseService {
 
-    constructor() {
+    constructor(
+        protected http: HttpClient,
+        protected queryParamService: QueryParamService,
+    ) {
+        super('users', http, queryParamService);
     }
 
-    getCurrentAuthenticatedUser(): UserEntity | boolean {
+    getCurrentAuthenticatedUser(): any {
         return StorageService.currentAuthenticatedUser();
     }
 
-    signin(email: string, password: string): Promise<UserEntity> | null {
-        console.log(email);
-        console.log(password);
-        return null;
+    signin(email: string, password: string): Observable<UserEntity> {
+        return this.http.post<UserEntity>(this.path + '/signin', {email, password});
+    }
+
+    signup(user: UserEntity): Observable<UserEntity> {
+        return this.post(user);
+    }
+
+    signout(): void {
+        StorageService.logoutUser();
     }
 }
