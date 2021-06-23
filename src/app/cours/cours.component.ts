@@ -5,7 +5,6 @@ import { CoursEntity } from '../@commons/entities/cours.entity';
 import { RoleType } from '../@commons/enums/roleType';
 import { AuthService } from '../@commons/services/auth.service';
 import { UserEntity } from '../@commons/entities/user.entity';
-import { unwatchFile } from "fs";
 
 @Component({
     selector: 'app-sgbd-cours',
@@ -15,6 +14,8 @@ import { unwatchFile } from "fs";
 export class CoursComponent implements OnInit {
 
     cours: CoursEntity[] = [];
+    allCours: CoursEntity[] = [];
+    user: UserEntity | undefined;
 
     constructor(
         private coursService: CoursService,
@@ -23,9 +24,16 @@ export class CoursComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        const user: UserEntity = this.authService.getCurrentAuthenticatedUser();
-        if (user && user.id) {
-            from(this.coursService.list({id: user.id})).subscribe((cours) => {
+        this.user = this.authService.getCurrentAuthenticatedUser();
+        if (this.user && this.user.id) {
+            this.getCoursList();
+            this.getUnregistered();
+        }
+    }
+
+    getCoursList(): void {
+        if (this.user && this.user.id) {
+            from(this.coursService.list({id: this.user.id})).subscribe((cours) => {
                 if (cours && cours._embedded) {
                     this.cours = cours._embedded.classeList;
                     this.computeTeacher();
@@ -51,5 +59,25 @@ export class CoursComponent implements OnInit {
     }
 
     onResultsClicked(uuid: any): void {
+    }
+
+    onRegisterClassClicked(uuid: any): void {
+        if (this.user && this.user.id) {
+            from(this.coursService.register(uuid, this.user)).subscribe((inscription) => {
+                this.getCoursList();
+                this.getUnregistered();
+            });
+        }
+    }
+
+    private getUnregistered(): void {
+        if (this.user && this.user.id) {
+            from(this.coursService.getUnregistered(this.user.id)).subscribe((cours) => {
+                if (cours && cours._embedded) {
+                    this.allCours = cours._embedded.classeList;
+                    this.computeTeacher();
+                }
+            });
+        }
     }
 }

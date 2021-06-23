@@ -16,6 +16,22 @@
 
                 </div>
             </div>
+
+            <div class="row m-0 justify-content-around">
+                <div class="col">
+                    <div class="row">
+                        <h2>M'inscrire à un cours ({{allCours.length}} disponibles) </h2>
+                    </div>
+                    <div class="row">
+                        <div class="col-12" *ngFor="let cour of allCours">
+                            <ng-container [ngTemplateOutlet]="allCoursTemplate"
+                                          [ngTemplateOutletContext]="{cour:cour}"></ng-container>
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
         </div>
         <!-- ---------- END CONTENT ---------- -->
     </div>
@@ -29,13 +45,38 @@
                 <h5 class="card-title"><a routerLink="/cours/{{cour.uuid}}">{{cour.name}}</a></h5>
                 <div class="d-flex flex-column align-items-end">
                     <h6 class="card-subtitle mb-2 text-muted">{{cour.id}}</h6>
-                    <h6 class="card-subtitle mb-2"><a routerLink="/cours/teacher/{{cour.teacher.id}}">{{cour.teacher.firstname}} {{cour.teacher.lastname}}</a></h6>
+                    <h6 class="card-subtitle mb-2"><a
+                            routerLink="/cours/teacher/{{cour?.teacher?.id}}">{{cour?.teacher?.firstname}} {{cour?.teacher?.lastname}}</a>
+                    </h6>
                 </div>
             </div>
             <div>
-                <h6><a routerLink="/resultats/{{cour.uuid}}" (click)="onResultsClicked(cour.uuid)">Mes resultats</a></h6>
+                <h6><a routerLink="/resultats/{{cour.uuid}}" (click)="onResultsClicked(cour.uuid)">Mes resultats</a>
+                </h6>
             </div>
         </div>
     </div>
 </ng-template>
 <!-- ---------- END COURS TEMPLATE ---------- -->
+
+<!-- ---------- All COurs TEMPLATE ---------- -->
+<ng-template #allCoursTemplate let-cour="cour">
+    <div class="card m-2 list-item">
+        <div class="card-body">
+            <div class="d-flex justify-content-between">
+                <h5 class="card-title"><a routerLink="/cours/{{cour.uuid}}">{{cour.name}}</a></h5>
+                <div class="d-flex flex-column align-items-end">
+                    <h6 class="card-subtitle mb-2 text-muted">{{cour.id}}</h6>
+                    <h6 class="card-subtitle mb-2"><a
+                            routerLink="/cours/teacher/{{cour?.teacher?.id}}">{{cour?.teacher?.firstname}} {{cour?.teacher?.lastname}}</a>
+                    </h6>
+                </div>
+            </div>
+            <div>
+                <h6><a (click)="onRegisterClassClicked(cour.uuid)">M'inscrire</a>
+                </h6>
+            </div>
+        </div>
+    </div>
+</ng-template>
+<!-- ---------- END All COurs TEMPLATE ---------- -->
