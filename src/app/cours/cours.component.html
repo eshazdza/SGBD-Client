@@ -61,7 +61,7 @@
             </div>
             <ng-container *ngIf="inscription.role.roleType === 'TEACHER'">
                 <div>
-                    <p><a routerLink="/resultats/{{inscription.classe.uuid}}"
+                    <p><a
                            (click)="onEncodeResultsClicked(inscription.classe.uuid)">Encoder des résultats</a>
                     </p>
                     <p><a

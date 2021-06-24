@@ -8,4 +8,6 @@ export class UserEntity {
     password: string | null | undefined;
     confirmPassword: string | null | undefined;
     inscriptionList: InscriptionEntity[] | undefined;
+    user: any;
+    role: any;
 }

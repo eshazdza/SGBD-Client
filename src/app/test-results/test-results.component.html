@@ -9,8 +9,50 @@
         <!-- ---------- END SIDENAV ---------- -->
 
         <div class="col-10 content p-5">
+            <ng-container *ngIf="encode">
+                <div class="row">
+                    <div class="col mb-5">
+                        <div class="card m-2 list-item">
+                            <div class="card-header">
+                                Encoder resultats
+                            </div>
+                            <div class="card-body">
+                                <p>Choisir un interrogation :</p>
+                                <ng-container *ngFor="let test of testList">
+                                    <div class="card-body">
+                                        <div class="mt-3" (click)="onInterroClicked(test.id)">{{test.date | date}}</div>
+                                        <ng-container *ngIf="showStudentList">
+
+                                            <ng-container *ngFor="let inscription of studentList; let i = index">
+                                                <ng-container *ngIf="inscription.role.roleType === 'STUDENT'">
+                                                    <form [formGroup]="resultsGroup">
+                                                        <div class="form-row">
+                                                            <label class="form-label mb-3">{{inscription?.user?.firstname}}</label>
+                                                            <input type="number" max="100" class="form-control"
+                                                                   formControlName="{{inscription.user.id}}">
+                                                            <a class="btn"
+                                                               (click)="saveResults(test.id, inscription)">Enregistrer</a>
+                                                        </div>
+                                                    </form>
+                                                </ng-container>
+
+                                            </ng-container>
+
+
+                                        </ng-container>
+
+                                    </div>
+                                </ng-container>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </ng-container>
             <div class="row m-0 justify-content-around">
-                <div class="" ><div class="btn btn-primary" href="" (click)="onDownloadCliked()">Mon bulletin</div></div>
+                <div class="">
+                    <div class="btn btn-primary" href="" (click)="onDownloadCliked()">Mon bulletin</div>
+                </div>
                 <div class="col-12" *ngFor="let result of results">
                     <ng-container [ngTemplateOutlet]="resultTemplate"
                                   [ngTemplateOutletContext]="{result:result}"></ng-container>
@@ -33,18 +75,6 @@
             {{result.test.date | date}}
 
         </div>
-        <!--        <div class="card-body">-->
-        <!--            <div class="d-flex justify-content-between">-->
-        <!--                <h5 class="card-title"><a routerLink="/cours/{{result..uuid}}">{{cour.name}}</a></h5>-->
-        <!--                <div class="d-flex flex-column align-items-end">-->
-        <!--                    <h6 class="card-subtitle mb-2 text-muted">{{cour.id}}</h6>-->
-        <!--                    <h6 class="card-subtitle mb-2"><a routerLink="/cours/teacher/{{cour.teacher.id}}">{{cour.teacher.firstname}} {{cour.teacher.lastname}}</a></h6>-->
-        <!--                </div>-->
-        <!--            </div>-->
-        <!--            <div>-->
-        <!--                <h6><a routerLink="/resultats/{{cour.uuid}}" (click)="onResultsClicked(cour.uuid)">Mes resultats</a></h6>-->
-        <!--            </div>-->
-        <!--        </div>-->
     </div>
 </ng-template>
 <!-- ---------- END RESULT TEMPLATE ---------- -->

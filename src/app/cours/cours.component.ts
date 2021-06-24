@@ -7,6 +7,7 @@ import { AuthService } from '../@commons/services/auth.service';
 import { UserEntity } from '../@commons/entities/user.entity';
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { ModalComponent } from "./modal/modal.component";
+import { ActivatedRoute, Router } from "@angular/router";
 
 @Component({
     selector: 'app-sgbd-cours',
@@ -23,6 +24,8 @@ export class CoursComponent implements OnInit {
         private coursService: CoursService,
         private authService: AuthService,
         private modalService: NgbModal,
+        private router: Router,
+        private route: ActivatedRoute,
     ) {
     }
 
@@ -30,7 +33,6 @@ export class CoursComponent implements OnInit {
         from(this.authService.getUser()).subscribe((user) => {
             if (user) {
                 this.user = user;
-                console.log(this.user.inscriptionList);
                 if (this.user && this.user.id) {
                     this.getCoursList();
                     this.getUnregistered();
@@ -92,8 +94,12 @@ export class CoursComponent implements OnInit {
         }
     }
 
-    onEncodeResultsClicked(uuid: any) {
-        console.log(uuid);
+    onEncodeResultsClicked(uuid: any): void {
+        this.router.navigate(['/resultats'],
+            {
+                relativeTo: this.route,
+                queryParams: {cours: uuid}
+            });
     }
 
     onPlanTestClicked(uuid: any): void {
