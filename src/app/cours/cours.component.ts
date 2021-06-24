@@ -5,6 +5,8 @@ import { CoursEntity } from '../@commons/entities/cours.entity';
 import { RoleType } from '../@commons/enums/roleType';
 import { AuthService } from '../@commons/services/auth.service';
 import { UserEntity } from '../@commons/entities/user.entity';
+import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
+import { ModalComponent } from "./modal/modal.component";
 
 @Component({
     selector: 'app-sgbd-cours',
@@ -20,15 +22,23 @@ export class CoursComponent implements OnInit {
     constructor(
         private coursService: CoursService,
         private authService: AuthService,
+        private modalService: NgbModal,
     ) {
     }
 
     ngOnInit(): void {
-        this.user = this.authService.getCurrentAuthenticatedUser();
-        if (this.user && this.user.id) {
-            this.getCoursList();
-            this.getUnregistered();
-        }
+        from(this.authService.getUser()).subscribe((user) => {
+            if (user) {
+                this.user = user;
+                console.log(this.user.inscriptionList);
+                if (this.user && this.user.id) {
+                    this.getCoursList();
+                    this.getUnregistered();
+                }
+            }
+
+        });
+
     }
 
     getCoursList(): void {
@@ -39,6 +49,7 @@ export class CoursComponent implements OnInit {
                     this.computeTeacher();
                 }
             });
+            console.log(this.user);
         }
     }
 
@@ -79,5 +90,17 @@ export class CoursComponent implements OnInit {
                 }
             });
         }
+    }
+
+    onEncodeResultsClicked(uuid: any) {
+        console.log(uuid);
+    }
+
+    onPlanTestClicked(uuid: any): void {
+        const modalRef = this.modalService.open(ModalComponent, {centered: true, backdrop: true});
+        modalRef.componentInstance.courId = uuid;
+        modalRef.componentInstance.interroSave.subscribe((e: any) => {
+            console.log(e);
+        });
     }
 }

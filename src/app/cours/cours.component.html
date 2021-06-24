@@ -10,9 +10,9 @@
         <!-- ---------- CONTENT ---------- -->
         <div class="col-10 content p-5">
             <div class="row m-0 justify-content-around">
-                <div class="col-12" *ngFor="let cour of cours">
+                <div class="col-12" *ngFor="let inscription of user?.inscriptionList">
                     <ng-container [ngTemplateOutlet]="courTemplate"
-                                  [ngTemplateOutletContext]="{cour:cour}"></ng-container>
+                                  [ngTemplateOutletContext]="{inscription:inscription}"></ng-container>
 
                 </div>
             </div>
@@ -38,22 +38,37 @@
 </div>
 
 <!-- ---------- COURS TEMPLATE ---------- -->
-<ng-template #courTemplate let-cour="cour">
+<ng-template #courTemplate let-inscription="inscription">
     <div class="card m-2 list-item">
         <div class="card-body">
             <div class="d-flex justify-content-between">
-                <h5 class="card-title"><a routerLink="/cours/{{cour.uuid}}">{{cour.name}}</a></h5>
+                <h5 class="card-title"><a
+                        routerLink="/cours/{{inscription.classe.uuid}}">{{inscription.classe.name}}</a></h5>
                 <div class="d-flex flex-column align-items-end">
-                    <h6 class="card-subtitle mb-2 text-muted">{{cour.id}}</h6>
-                    <h6 class="card-subtitle mb-2"><a
-                            routerLink="/cours/teacher/{{cour?.teacher?.id}}">{{cour?.teacher?.firstname}} {{cour?.teacher?.lastname}}</a>
+                    <h6 class="card-subtitle mb-2 text-muted">{{inscription.classe.id}}</h6>
+                    <h6 class="card-subtitle mb-2">
+                        <a
+                                routerLink="/cours/teacher/{{inscription.classe?.teacher?.id}}">
+                            {{inscription.classe?.teacher?.firstname}} {{inscription.classe?.teacher?.lastname}}
+                        </a>
                     </h6>
                 </div>
             </div>
             <div>
-                <h6><a routerLink="/resultats/{{cour.uuid}}" (click)="onResultsClicked(cour.uuid)">Mes resultats</a>
+                <h6><a routerLink="/resultats/{{inscription.classe.uuid}}"
+                       (click)="onResultsClicked(inscription.classe.uuid)">Resultats</a>
                 </h6>
             </div>
+            <ng-container *ngIf="inscription.role.roleType === 'TEACHER'">
+                <div>
+                    <p><a routerLink="/resultats/{{inscription.classe.uuid}}"
+                           (click)="onEncodeResultsClicked(inscription.classe.uuid)">Encoder des résultats</a>
+                    </p>
+                    <p><a
+                          (click)="onPlanTestClicked(inscription.classe.uuid)">Planifier une interro</a>
+                    </p>
+                </div>
+            </ng-container>
         </div>
     </div>
 </ng-template>

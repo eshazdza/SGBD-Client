@@ -22,6 +22,10 @@ export class AuthService extends BaseService {
         return StorageService.currentAuthenticatedUser();
     }
 
+    getUser(): Observable<UserEntity> {
+        return this.http.get<UserEntity>(this.path + '/' + this.getCurrentAuthenticatedUser().id);
+    }
+
     signin(email: string, password: string): Observable<UserEntity> {
         return this.http.post<UserEntity>(this.path + '/signin', {email, password});
     }

@@ -1,0 +1,42 @@
+<!-- ---------- MODAL DEFINITION ---------- -->
+<div class="modal-content">
+    <div class="modal-header">
+        <h4 class="w-100 p-0 m-0 text-center">
+            Nouvelle Interro
+        </h4>
+        <i (click)="onCloseClicked();" class="fa fa-times blue m-0 p-0 float-right"></i>
+    </div>
+    <div class="modal-body px-5">
+        <ng-container [ngTemplateOutlet]="content"></ng-container>
+    </div>
+</div>
+<!-- ---------- END MODAL DEFINITION ---------- -->
+
+<!-- ---------- CONTENT ---------- -->
+<ng-template #content>
+    <div class="row">
+        <div class="col">
+            <ng-container *ngIf="formGroup">
+                <form [formGroup]="formGroup">
+                    <div class="mb-4">
+                        <div class="form-group row">
+                            <label for="interroDateControle" class="col-sm-5 col-form-label">Date : </label>
+                            <div class="col-sm-5">
+                                <input type="date" formControlName="interroDateControle" id="interroDateControle">
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </ng-container>
+        </div>
+    </div>
+    <div class="row justify-content-between">
+        <div class="col-4">
+            <a (click)="onSaveClicked()" class="green">Sauver</a>
+        </div>
+        <div class="col-4 text-right">
+            <a (click)="onCloseClicked()" class="blue">Annuler</a>
+        </div>
+    </div>
+</ng-template>
+<!-- ---------- END CONTENT ---------- -->
