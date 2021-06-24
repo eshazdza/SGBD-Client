@@ -20,16 +20,16 @@
                                 <p>Choisir un interrogation :</p>
                                 <ng-container *ngFor="let test of testList">
                                     <div class="card-body">
-                                        <div class="mt-3" (click)="onInterroClicked(test.id)">{{test.date | date}}</div>
+                                        <div class="mt-3" (click)="onInterroClicked()">{{test.date | date}}</div>
                                         <ng-container *ngIf="showStudentList">
 
                                             <ng-container *ngFor="let inscription of studentList; let i = index">
-                                                <ng-container *ngIf="inscription.role.roleType === 'STUDENT'">
+                                                <ng-container *ngIf="inscription?.role?.roleType === 'STUDENT'">
                                                     <form [formGroup]="resultsGroup">
                                                         <div class="form-row">
                                                             <label class="form-label mb-3">{{inscription?.user?.firstname}}</label>
                                                             <input type="number" max="100" class="form-control"
-                                                                   formControlName="{{inscription.user.id}}">
+                                                                   formControlName="{{inscription?.user?.id}}">
                                                             <a class="btn"
                                                                (click)="saveResults(test.id, inscription)">Enregistrer</a>
                                                         </div>
@@ -51,7 +51,7 @@
             </ng-container>
             <div class="row m-0 justify-content-around">
                 <div class="">
-                    <div class="btn btn-primary" href="" (click)="onDownloadCliked()">Mon bulletin</div>
+                    <div class="btn btn-primary" (click)="onDownloadCliked()">Mon bulletin</div>
                 </div>
                 <div class="col-12" *ngFor="let result of results">
                     <ng-container [ngTemplateOutlet]="resultTemplate"

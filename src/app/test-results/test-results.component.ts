@@ -9,8 +9,8 @@ import { TestService } from '../@commons/services/test.service';
 import { TestEntity } from '../@commons/entities/test.entity';
 import { CoursService } from '../@commons/services/cours.service';
 import { FormControl, FormGroup } from '@angular/forms';
-import { RoleType } from "../@commons/enums/roleType";
-import { InscriptionEntity } from "../@commons/entities/inscription.entity";
+import { RoleType } from '../@commons/enums/roleType';
+import { InscriptionEntity } from '../@commons/entities/inscription.entity';
 
 @Component({
     selector: 'app-sgbd-test-results',
@@ -68,7 +68,7 @@ export class TestResultsComponent implements OnInit {
 
     }
 
-    onInterroClicked(id: string): void {
+    onInterroClicked(): void {
         if (!this.showStudentList) {
             if (this.coursId) {
                 from(this.coursService.getById(this.coursId)).subscribe((cours) => {
@@ -88,17 +88,18 @@ export class TestResultsComponent implements OnInit {
         }
     }
 
-    saveResults(testId: string, inscription: InscriptionEntity): void {
+    saveResults(testId?: string, inscription?: InscriptionEntity): void {
+        if (testId && inscription) {
+            const formControlTarget: string = inscription?.user?.id as string;
 
-        const formControlTarget: string = inscription?.user?.id as string;
-
-        const userTest = new TestResultEntity();
-        userTest.present = true;
-        userTest.inscription = {id: inscription.id};
-        userTest.points = this.resultsGroup.get(`${formControlTarget}`)?.value;
-        userTest.test = {id: testId};
-        from(this.testResultService.post(userTest)).subscribe((test) => {
-            console.log(test);
-        });
+            const userTest = new TestResultEntity();
+            userTest.present = true;
+            userTest.inscription = {id: inscription.id};
+            userTest.points = this.resultsGroup.get(`${formControlTarget}`)?.value;
+            userTest.test = {id: testId};
+            from(this.testResultService.post(userTest)).subscribe((test) => {
+                console.log(test);
+            });
+        }
     }
 }
